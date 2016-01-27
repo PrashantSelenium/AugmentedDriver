@@ -12,16 +12,21 @@ public class IntegrationFactory {
 
     private final SauceLabsIntegration sauceLabsIntegration;
     private final TeamCityIntegration teamCityIntegration;
+    private final AllureIntegration allureIntegration;
 
     @Inject
     public IntegrationFactory(SauceLabsIntegration sauceLabsIntegration,
-                              TeamCityIntegration teamCityIntegration) {
+                              TeamCityIntegration teamCityIntegration,
+                              AllureIntegration allureIntegration) {
         this.sauceLabsIntegration = Preconditions.checkNotNull(sauceLabsIntegration);;
         this.teamCityIntegration = Preconditions.checkNotNull(teamCityIntegration);
+        this.allureIntegration = Preconditions.checkNotNull(allureIntegration);
     }
 
     /**
      * Saucelabs Integration.
+     *
+     * @return the SauceLabsIntegration.
      */
     public SauceLabsIntegration sauceLabs() {
         return sauceLabsIntegration;
@@ -29,8 +34,19 @@ public class IntegrationFactory {
 
     /**
      * TeamCity Integration.
+     *
+     * @return  the TeamCityIntegration.
      */
     public TeamCityIntegration teamCity() {
         return teamCityIntegration;
+    }
+
+    /**
+     * Allure Integration.
+     *
+     * @return  the AllureIntegration.
+     */
+    public AllureIntegration allure() {
+        return allureIntegration;
     }
 }

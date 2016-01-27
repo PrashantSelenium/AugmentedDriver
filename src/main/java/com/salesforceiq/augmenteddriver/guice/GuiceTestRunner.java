@@ -11,19 +11,17 @@ import java.util.List;
 
 public class GuiceTestRunner extends BlockJUnit4ClassRunner {
 
-    /**
-     * The Guice Injector.
-     */
     private final transient Injector injector;
 
     /**
-     * Contructor.
+     * Constructor.
      *
      * @param klass The in test.
      * @throws InitializationError If something goes wrong.
      */
     public GuiceTestRunner(final Class<?> klass) throws InitializationError {
         super(klass);
+
         List<Class<? extends AbstractModule>> modules = getGuiceModulesFor(klass);
         modules.addAll(getExtraModulesFor(klass));
         this.injector = this.createInjectorFor(modules);
@@ -38,6 +36,7 @@ public class GuiceTestRunner extends BlockJUnit4ClassRunner {
 
     /**
      * Create a Guice Injector for the class under test.
+     *
      * @param classes Guice Modules
      * @return A Guice Injector instance.
      * @throws InitializationError If couldn't instantiate a module.

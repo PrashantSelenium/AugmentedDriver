@@ -24,17 +24,33 @@ import java.net.URL;
 public class AugmentedIOSDriver extends IOSDriver<WebElement> {
     private AugmentedIOSFunctions augmentedFunctions;
 
-    public AugmentedIOSDriver(@Named(PropertiesModule.REMOTE_ADDRESS) String remoteAddress,
+    /**
+     * Extensive constructor.
+     *
+     * @param remoteAddress Where the Selenium is running.
+     * @param capabilities The capabilities to use.
+     * @param augmentedFunctions the extra functionality for IOS.
+     * @throws MalformedURLException In case the remoteAddress is now well formed.
+     */
+    public AugmentedIOSDriver(String remoteAddress,
                               DesiredCapabilities capabilities,
                               AugmentedIOSFunctions augmentedFunctions) throws MalformedURLException {
         super(new URL(remoteAddress), capabilities);
         this.augmentedFunctions = augmentedFunctions;
     }
 
+    /**
+     * @return the augmented functionality on top of the driver.
+     */
     public AugmentedIOSFunctions augmented() {
         return augmentedFunctions;
     }
 
+    /**
+     * DO NOT USE.
+     *
+     * @param augmentedFunctions the functions to set on top of the driver.
+     */
     public void setAugmentedFunctions(AugmentedIOSFunctions augmentedFunctions) {
         this.augmentedFunctions = augmentedFunctions;
     }

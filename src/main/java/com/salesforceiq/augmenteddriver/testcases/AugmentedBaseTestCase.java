@@ -1,21 +1,19 @@
 package com.salesforceiq.augmenteddriver.testcases;
 
-import com.salesforceiq.augmenteddriver.asserts.AugmentedAssertInterface;
-import com.salesforceiq.augmenteddriver.guice.GuiceTestRunner;
-import com.salesforceiq.augmenteddriver.integrations.IntegrationFactory;
-import com.salesforceiq.augmenteddriver.modules.PropertiesModule;
-import com.salesforceiq.augmenteddriver.util.TestRunnerConfig;
-import com.salesforceiq.augmenteddriver.util.Util;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import com.salesforceiq.augmenteddriver.asserts.AugmentedAssertInterface;
+import com.salesforceiq.augmenteddriver.guice.GuiceTestRunner;
+import com.salesforceiq.augmenteddriver.integrations.IntegrationFactory;
+import com.salesforceiq.augmenteddriver.modules.PropertiesModule;
+import com.salesforceiq.augmenteddriver.util.Util;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
  * Base Test Case for all tests.
@@ -38,14 +36,11 @@ public abstract class AugmentedBaseTestCase implements AugmentedAssertInterface 
     @Named(PropertiesModule.UNIQUE_ID)
     private String uniqueId;
 
-    @Inject
-    private DesiredCapabilities capabilities;
-
     /**
      * @return the wait time in seconds defined in the com.salesforceiq.augmenteddriver.properties (or 30 by default)
      */
     protected int waitTimeInSeconds() {
-        return Integer.valueOf(waitTimeInSeconds);
+        return Integer.valueOf(Preconditions.checkNotNull(waitTimeInSeconds));
     }
 
     /**
@@ -54,6 +49,7 @@ public abstract class AugmentedBaseTestCase implements AugmentedAssertInterface 
      */
     protected String getUniqueId() {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(uniqueId));
+
         return uniqueId;
     }
 
@@ -64,15 +60,8 @@ public abstract class AugmentedBaseTestCase implements AugmentedAssertInterface 
         return String.format("%s:%s:%s", getUniqueId(), Util.shortenClass(this.getClass()), testName.getMethodName());
     }
 
-    protected String getTestName() {
-        return testName.getMethodName();
-    }
-
     @Inject
     private IntegrationFactory integrations;
-
-    @Inject
-    private TestRunnerConfig arguments;
 
     /**
      * Hack, but there is no way to get the session Id in other way.
