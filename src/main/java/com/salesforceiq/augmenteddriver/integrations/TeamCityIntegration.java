@@ -33,15 +33,12 @@ public class TeamCityIntegration implements ReportIntegration {
     @Override
     public void print(String testName, String sessionId, IntegrationManager integrationManager) {
         if (integrationManager.containsIntegration("SauceLabsIntegration")) {
-            String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", testName, sessionId);
-            System.out.println(message);
+            System.out.println(String.format("SauceOnDemandSessionID=%s job-name=%s", testName, sessionId));
         }
     }
 
     @Override
     public RunListener getReporter(ByteArrayOutputStream outputStream, String nameAppender) {
-        Preconditions.checkNotNull(outputStream);
-        Preconditions.checkNotNull(nameAppender);
         return new TeamCityReporter(outputStream, nameAppender);
     }
 
